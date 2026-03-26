@@ -24,10 +24,13 @@ export default async function handler(req, res) {
 Thai Name: ${name}
 ${description ? `Thai Description: ${description}\n` : ''}${category ? `Thai Category: ${category}` : ''}`;
 
+    const referer = req.headers.referer || "http://localhost:3000";
+
     const googleRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Referer": referer
       },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }]
